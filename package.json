@@ -1,0 +1,32 @@
+{
+  "name": "snx_stats",
+  "version": "1.0.0",
+  "description": "A twitter bot that updates the feed with the statistics of the synthetix blockchain.",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "ethers": "^5.1.4",
+    "synthetix": "^2.45.2",
+    "synthetix-data": "^2.1.43"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vorg-san/snx_stats.git"
+  },
+  "keywords": [
+    "snx",
+    "synthetic",
+    "blockchain",
+    "etherscan"
+  ],
+  "author": "Daniel Carvalho Gabardo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vorg-san/snx_stats/issues"
+  },
+  "homepage": "https://github.com/vorg-san/snx_stats#readme"
+}
