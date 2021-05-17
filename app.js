@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const snxData = require("synthetix-data");
 const axios = require("axios");
 
@@ -49,19 +48,26 @@ async function defipulse() {
     console.log(e.data, e.message);
   }
 }
-defipulse()
+// defipulse()
+
+async function snx_data() {
+	let holders = await snxData.snx.holders({max:10})
+	holders = holders.map(h => ({address: h.address, balance: h.balanceOf}))
+	console.log(holders)
+
+		// 0xf9ddbda72b91090ba107a75b52370b9a136307d2 provavelmente tem stake
+	let debt = await snxData.snx.debtSnapshot({account: holders[9].address, max: 1})
+	console.log(debt)
+	debt = debt.map(d => ({time: new Date(d.timestamp), debtBalanceOf: d.debtBalanceOf}))
+	console.log(debt, holders[9].address)
+}
+snx_data()
 
 async function getVolume() {}
-async function getTradingFees() {}
 async function getTotalValueLocked() {}
+async function getPercentSNXStaked() {}
+async function getTradingFees() {}
 
-async function getPercentSNXStaked() {
-  let totalDailyActiveStakers = await snxData.snx.aggregateActiveStakers({
-    max: 2,
-  });
-  console.log(totalDailyActiveStakers);
-}
-// getPercentSNXStaked()
 
 async function getTotal() {
   let totalExchange = await snxData.exchanges.total();
@@ -76,6 +82,11 @@ async function getTotal() {
 
 // let holders = await snxData.snx.total();
 // console.log(holders);
+
+// let totalDailyActiveStakers = await snxData.snx.aggregateActiveStakers({
+// 	max: 2,
+// });
+// console.log(totalDailyActiveStakers);
 
 // console.log(
 // 	await snxData.exchanges.since({
