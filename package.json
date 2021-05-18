@@ -4,6 +4,7 @@
   "description": "A twitter bot that updates the feed with the statistics of the synthetix blockchain.",
   "main": "app.js",
   "dependencies": {
+    "@synthetixio/contracts-interface": "^2.45.2",
     "axios": "^0.21.1",
     "ethers": "^5.1.4",
     "synthetix": "^2.45.2",
@@ -12,7 +13,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
