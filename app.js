@@ -4,6 +4,8 @@ const { synthetix } = require('@synthetixio/contracts-interface')
 const { ethers, BigNumber } = require('ethers')
 const { formatEther, formatUnits } = require('ethers/lib/utils')
 
+const etherscan_key = process.env.etherscan_key
+
 const snxjs = synthetix({ network: 'mainnet' })
 
 async function getSNXStakedFromSynthetix() {
@@ -113,21 +115,17 @@ async function getTotalValueLockedFromDefipulse() {
 }
 // console.log(getTotalValueLockedFromDefipulse())
 
-const etherscan_key = process.env.etherscan_key
-
-async function getTradingFees() {
+async function getTradingFees(snxPrice) {
   const feePeriod = await snxjs.contracts.FeePool.recentFeePeriods(1)
   const feesAndRewards = {
     startTime: new Date(BigNumber.from(feePeriod.startTime).toNumber() * 1000) || 0,
-    feesToDistribute: Number(formatEther(feePeriod.feesToDistribute)) || 0,
-    feesClaimed: Number(formatEther(feePeriod.feesClaimed)) || 0,
-    rewardsToDistribute: Number(formatEther(feePeriod.rewardsToDistribute)) || 0,
-    rewardsClaimed: Number(formatEther(feePeriod.rewardsClaimed)) || 0,
+    feesToDistribute: Number(formatEther(feePeriod.feesToDistribute)) * 1 || 0, //sUSD
+    rewardsToDistribute: Number(formatEther(feePeriod.rewardsToDistribute)) * snxPrice || 0, //SNX
   }
 	console.log(feesAndRewards)
 	return feesAndRewards
 }
-getTradingFees()
+getTradingFees(21.53)
 
 // async function snx_data() {
 //   let holders = await snxData.snx.holders({ max: 10 })
