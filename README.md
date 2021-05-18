@@ -4,12 +4,10 @@ A twitter bot that updates the feed with the statistics of the synthetix blockch
 run with 'npm start'
 
  - Volume from coinmarketcap API
-    -> create key with random email, encript it in source code
-		-> get data and store it on the database
-		-> implement node-retry for robustness
-
  - Total Value Locked from defi pulse API
-    -> create key with random email, encript it in source code
-		-> get data and store it on the database
-		-> implement node-retry for robustness
-	
+ - Other stats from synthetix API
+    
+-> data is stored on a file (upgraded version would change this to a database)
+-> create key with random email, encript it in source code
+-> create key for graph with random email, encript it in source code
+-> implement node-retry for robustness

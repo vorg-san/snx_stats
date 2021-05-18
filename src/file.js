@@ -1,7 +1,7 @@
 const { open, access } = require('fs/promises')
 const { constants } = require('fs')
 
-const fileName = 'data.txt'
+const fileName = '_data.txt'
 const columnsSeparator = '||'
 const columnsStored = [
   'Time',
@@ -12,6 +12,7 @@ const columnsStored = [
   'Total Value Locked (USD)',
   'Fees',
 ]
+const columns = {time: 0, price: 1, supply: 2, locked: 3, volume: 4, tvl: 5, fees: 6}
 
 async function fileExists() {
   try {
@@ -56,5 +57,6 @@ async function appendData(data) {
 
 module.exports = {
 	readLastData : readLastData,
-	appendData : appendData
+	appendData : appendData,
+	columns : columns
 }
