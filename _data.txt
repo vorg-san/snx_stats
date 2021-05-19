@@ -1,0 +1,3 @@
+Time||Price (USD)||Percent SNX Staked||Volume 24h (USD)||Total Value Locked (USD)||Fees
+2021-05-19 07:05||19.56976078||0.5129467982979878||[object Promise]||[object Promise]||48104413.530128814
+2021-05-19 08:05||19.07495409||51||739743964.0585437||[object Object],[object Object],[object Object],[object Object],[object Object]||1158346.3150007934

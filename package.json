@@ -31,5 +31,13 @@
   "bugs": {
     "url": "https://github.com/vorg-san/snx_stats/issues"
   },
-  "homepage": "https://github.com/vorg-san/snx_stats#readme"
+  "homepage": "https://github.com/vorg-san/snx_stats#readme",
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "bracketSpacing": false
+  }
 }
