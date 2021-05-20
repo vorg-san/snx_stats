@@ -14,10 +14,10 @@ I develop software for 12 years and I am in love (and invest in) the cryptocurre
 ## Features
 
  - Most of the stats directly from Synthetix API
- - Volume from CoinMarketCap API
+ - Volume and rank from CoinMarketCap API
  - Total Value Locked from DeFi Pulse API
     
--> data is stored on a file as the bot runs 'data.txt' (upgraded version would change this to a database)
+-> data is stored in file 'data.txt' as the bot runs  (upgraded version would change this to a database)
 -> twitter post mentions % diffs from previous data with icons
 -> time interval between each twitter post can be set, see configuration below
 
@@ -25,11 +25,13 @@ I develop software for 12 years and I am in love (and invest in) the cryptocurre
 
 Clone this repo to any folder and inside it run "npm install".
 
-## Configuration
+## Configuration 'src/config.js'
 
-There are some secret keys to be set on the system for this bot to function properly, their names can be seen in the src/config.js file. 
+There are some secret keys to be set on the system for this bot to function properly:
+ - DeFi Pulse API key - create account and get one here https://data.defipulse.com/dashboard/egs
+ - Twitter API keys - create Standalone APP here https://developer.twitter.com/en/portal/projects-and-apps
 
-Variable 'minutesIntervalBotPost'  sets the minimum interval of minutes between data collection and subsequent twitter status update.
+Variable 'minutesIntervalBotPost' sets the minimum interval of minutes between cycles of data collection and subsequent twitter status update.
 
 ## Run
 

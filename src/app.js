@@ -10,7 +10,7 @@ async function insertNewData(file, snxExp) {
   const price = await snxExp.getSNXPrice()
   const {percentSNXStaked, approxTotalSNXStaked} = await snxExp.getSNXStaked(price)
   const {startTime, feesToDistribute, rewardsToDistribute} = await snxExp.getTradingFees()
-  const volume24h = await getVolume24h()
+  const {volume24h, rank} = await getVolume24h()
   const tvl = await getTotalValueLocked()
 
   await file.appendData(
@@ -21,7 +21,8 @@ async function insertNewData(file, snxExp) {
     tvl || '-',
     feesToDistribute || '-',
     rewardsToDistribute || '-',
-    moment(startTime).format('YYYY-MM-DD HH:mm') || '-'
+    moment(startTime).format('YYYY-MM-DD HH:mm') || '-',
+		rank || '-'
   )
 }
 

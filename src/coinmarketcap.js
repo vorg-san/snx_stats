@@ -5,12 +5,12 @@ async function getVolume24h() {
     let res = await axios.get('https://coinmarketcap-api.synthetix.io/public/prices?symbols=SNX')
     let cmc_snx = res.data.data
 
-    return cmc_snx.SNX.quote.USD.volume_24h
+    return {volume24h: cmc_snx.SNX.quote.USD.volume_24h, rank: cmc_snx.SNX.cmc_rank}
   } catch (e) {
     console.log(e.data, e.message)
   }
 }
 
 module.exports = {
-	getVolume24h : getVolume24h
+  getVolume24h: getVolume24h,
 }

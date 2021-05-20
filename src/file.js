@@ -14,6 +14,7 @@ class File {
       'Fees',
       'Rewards',
       'Start Fee period',
+			'Rank'
     ]
   }
 
@@ -21,8 +22,8 @@ class File {
     return this._columns
   }
 
-  async appendData(time, price, percentStaked, volume24h, tvl, fees, rewardsToDistribute, startTime) {
-    const data = [time, price, percentStaked, volume24h, tvl, fees, rewardsToDistribute, startTime]
+  async appendData(time, price, percentStaked, volume24h, tvl, fees, rewardsToDistribute, startTime, rank) {
+    const data = [time, price, percentStaked, volume24h, tvl, fees, rewardsToDistribute, startTime, rank]
 
     if (!(await this.fileExists())) {
       await this.createOrResetFile()

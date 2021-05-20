@@ -33,11 +33,28 @@ function percentDiff(oldValue, newValue) {
 
 	if(change === 0) {
 		return ''
-	}
-	if(change > 0) {
-		return '🔥+' + change + '%'	
 	} else {
-		return '🔻' + change + '%'	
+		if(change > 0) {
+			return '🔥+' + change + '%'	
+		} else {
+			return '🔻' + change + '%'	
+		}
+	}
+}
+
+function numericDiff(oldValue, newValue) {
+	const o = parseFloat(oldValue)
+	const n = parseFloat(newValue)
+	const change = n - o
+
+	if(change === 0) {
+		return ''
+	} else {
+		if(change > 0) {
+			return '🔥+' + change
+		} else {
+			return '🔻' + change
+		}
 	}
 }
 
