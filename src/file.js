@@ -3,7 +3,7 @@ const { constants } = require('fs')
 
 class File {
 	constructor() {
-		this._fileName = '_data.txt'
+		this._fileName = 'data.txt'
 		this._columnsSeparator = '||'
 		this._columns = [
 			'Time',
@@ -12,6 +12,7 @@ class File {
 			'Volume 24h (USD)',
 			'Total Value Locked (USD)',
 			'Fees',
+			'Rewards',
 		]
 	}
 	

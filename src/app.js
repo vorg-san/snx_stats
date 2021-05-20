@@ -2,45 +2,56 @@ const File = require('./file')
 const SynthetixExplorer = require('./synthetix')
 const {getVolume24h} = require('./coinmarketcap')
 const {getTotalValueLocked} = require('./defipulse')
+const {postTwitter} = require('./twitter')
+const {minutesIntervalBotPost} = require('./config')
 const moment = require('moment')
-const {minutesIntervalBotPost} = require('./env')
-
-function toCurrency(num) {
-	return num
-  return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
-}
 
 async function insertNewData(file, snxExp) {
-  // const price = await snxExp.getSNXPrice()
-  // const {percentSNXStaked, approxTotalSNXStaked} = await snxExp.getSNXStaked(price)
-  // const {startTime, feesToDistribute, rewardsToDistribute} = await snxExp.getTradingFees()
-  // const volume24h = await getVolume24h()
+  const price = await snxExp.getSNXPrice()
+  const {percentSNXStaked, approxTotalSNXStaked} = await snxExp.getSNXStaked(price)
+  const {startTime, feesToDistribute, rewardsToDistribute} = await snxExp.getTradingFees()
+  const volume24h = await getVolume24h()
   const tvl = await getTotalValueLocked()
 
-  // await file.appendData(
-  //   moment().format('YYYY-MM-DD HH:MM'),
-  //   toCurrency(price || 0),
-  //   parseInt(percentSNXStaked * 100) || 0,
-  //   toCurrency(volume24h) || 0,
-  //   toCurrency(tvl) || 0,
-  //   toCurrency(feesToDistribute * price) || 0
-  // )
+  await file.appendData(
+    moment().format('YYYY-MM-DD HH:mm'),
+    price || '-',
+    percentSNXStaked * 100 || '-',
+    volume24h || '-',
+    tvl || '-',
+    feesToDistribute || '-'
+  )
 }
 
-async function run() {
+async function getDataAndPost() {
   const file = new File()
-  const snxExp = new SynthetixExplorer()
 
   try {
-    const last = await file.readLastData()
-
-    if (!last.length) {
+    const snxExp = new SynthetixExplorer()
+    const lastData = await file.readLastData()
+		
+    if (!lastData.length) {
       await insertNewData(file, snxExp)
-    } else if (moment().diff(moment(last[0]), 'minutes') >= minutesIntervalBotPost) {
+			await postTwitter(lastData, await file.readLastData())
+    } else if (moment().diff(moment(lastData[0]), 'minutes', true) > minutesIntervalBotPost - 1) {
       await insertNewData(file, snxExp)
+			await postTwitter(lastData, await file.readLastData())
     }
+
+		console.log(`Sleeping for ${minutesIntervalBotPost} min...`)
   } catch (error) {
     console.log(error)
   }
 }
-run()
+
+function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function runForever() {
+  while (true) {
+    await Promise.all([getDataAndPost(), timeout(minutesIntervalBotPost * 60 * 1000)])
+  }
+}
+
+runForever()

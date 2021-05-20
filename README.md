@@ -17,11 +17,19 @@ I develop software for 12 years and I am in love (and invest in) the cryptocurre
  - Volume from CoinMarketCap API
  - Total Value Locked from DeFi Pulse API
     
--> data is stored on a file (upgraded version would change this to a database)
--> create key with random email, encript it in source code
--> create key for graph with random email, encript it in source code
--> implement node-retry for robustness
--> twitter post mentions % diffs from previous data, show different icons for different increases or decreases
+-> data is stored on a file as the bot runs 'data.txt' (upgraded version would change this to a database)
+-> twitter post mentions % diffs from previous data with icons
+-> time interval between each twitter post can be set, see configuration below
+
+## Install
+
+Clone this repo to any folder and inside it run "npm install".
+
+## Configuration
+
+There are some secret keys to be set on the system for this bot to function properly, their names can be seen in the src/config.js file. 
+
+Variable 'minutesIntervalBotPost'  sets the minimum interval of minutes between data collection and subsequent twitter status update.
 
 ## Run
 

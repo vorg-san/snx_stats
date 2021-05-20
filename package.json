@@ -9,7 +9,8 @@
     "ethers": "^5.1.4",
     "moment": "^2.29.1",
     "synthetix": "^2.45.2",
-    "synthetix-data": "^2.1.43"
+    "synthetix-data": "^2.1.43",
+    "twit": "^2.2.11"
   },
   "devDependencies": {},
   "scripts": {

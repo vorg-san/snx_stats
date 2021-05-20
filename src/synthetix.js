@@ -2,7 +2,7 @@ const {pageResults} = require('synthetix-data')
 const {synthetix} = require('@synthetixio/contracts-interface')
 const {ethers, BigNumber} = require('ethers')
 const {formatEther, formatUnits} = require('ethers/lib/utils')
-const {synthetixAPI} = require('./env')
+const {synthetixAPI} = require('./config')
 
 class SynthetixExplorer {
   constructor() {
@@ -78,7 +78,7 @@ class SynthetixExplorer {
   async getTradingFees() {
     const feePeriod = await this._snxjs.contracts.FeePool.recentFeePeriods(0)
 
-    const feesAndRewards = {
+		const feesAndRewards = {
       startTime: new Date(BigNumber.from(feePeriod.startTime).toNumber() * 1000) || 0,
       feesToDistribute: Number(formatEther(feePeriod.feesToDistribute)) || 0, //sUSD
       rewardsToDistribute: Number(formatEther(feePeriod.rewardsToDistribute)) || 0, //SNX
