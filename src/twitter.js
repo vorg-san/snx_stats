@@ -18,25 +18,26 @@ function postTwit(twit, texto) {
 
 async function postTwitter(oldData, newData) {
 	let text = ''
+	let daysSinceFeePeriodStarted = oneDecimal(moment().diff(moment(newData[7]), 'days', true))
 
   if (!oldData.length) {
     text = `SNX: $${toCurrency(newData[1])}
 						SNX staked: ${oneDecimal(newData[2])}%
 						Volume last 24h: $${toCurrency(newData[3])}
 						Total Value Locked: $${toCurrency(newData[4])}
-						Fees: ${toCurrency(newData[5])} sUSD
-						Rewards: ${toCurrency(newData[6])} SNX`
+						Fees (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[5])} sUSD
+						Rewards (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[6])} SNX`
   } else {
-		let horasDesdeUltimo = oneDecimal(moment(newData[0]).diff(moment(oldData[0]), 'hours', true))
+		let hoursSinceLastTweet = oneDecimal(moment(newData[0]).diff(moment(oldData[0]), 'hours', true))
 
     text = `SNX: $${toCurrency(newData[1])} ${percentDiff(oldData[1], newData[1])}
 						SNX staked: ${oneDecimal(newData[2])}% ${percentDiff(oldData[2], newData[2])}
 						Volume last 24h: $${toCurrency(newData[3])} ${percentDiff(oldData[3], newData[3])}
 						Total Value Locked: $${toCurrency(newData[4])} ${percentDiff(oldData[4], newData[4])}
-						Fees: ${toCurrency(newData[5])} sUSD ${percentDiff(oldData[5], newData[5])}
-						Rewards: ${toCurrency(newData[6])} SNX ${percentDiff(oldData[6], newData[6])}
+						Fees (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[5])} sUSD ${percentDiff(oldData[5], newData[5])}
+						Rewards (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[6])} SNX ${percentDiff(oldData[6], newData[6])}
 						
-						compared to ${horasDesdeUltimo} hours ago`
+						compared to ${hoursSinceLastTweet} hour${hoursSinceLastTweet > 1 ? 's' : ''} ago`
 	}
 
 	const twit = new Twit({

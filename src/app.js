@@ -19,7 +19,9 @@ async function insertNewData(file, snxExp) {
     percentSNXStaked * 100 || '-',
     volume24h || '-',
     tvl || '-',
-    feesToDistribute || '-'
+    feesToDistribute || '-',
+    rewardsToDistribute || '-',
+    moment(startTime).format('YYYY-MM-DD HH:mm') || '-'
   )
 }
 
@@ -29,16 +31,16 @@ async function getDataAndPost() {
   try {
     const snxExp = new SynthetixExplorer()
     const lastData = await file.readLastData()
-		
+
     if (!lastData.length) {
       await insertNewData(file, snxExp)
-			await postTwitter(lastData, await file.readLastData())
+      await postTwitter(lastData, await file.readLastData())
     } else if (moment().diff(moment(lastData[0]), 'minutes', true) > minutesIntervalBotPost - 1) {
       await insertNewData(file, snxExp)
-			await postTwitter(lastData, await file.readLastData())
+      await postTwitter(lastData, await file.readLastData())
     }
 
-		console.log(`Sleeping for ${minutesIntervalBotPost} min...`)
+    console.log(`Sleeping for ${minutesIntervalBotPost} min...`)
   } catch (error) {
     console.log(error)
   }
