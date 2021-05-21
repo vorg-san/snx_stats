@@ -22,26 +22,21 @@ async function insertNewData(file, snxExp) {
     feesToDistribute || '-',
     rewardsToDistribute || '-',
     moment(startTime).format('YYYY-MM-DD HH:mm') || '-',
-		rank || '-'
+    rank || '-'
   )
 }
 
 async function getDataAndPost() {
-  const file = new File()
-
   try {
-    const snxExp = new SynthetixExplorer()
+    const file = new File()
     const lastData = await file.readLastData()
 
-    if (!lastData.length) {
-      await insertNewData(file, snxExp)
+    // will fetch data and post only if it is the first post or minutesIntervalBotPost minutes have gone by since the last post
+    if (!lastData.length || moment().diff(moment(lastData[0]), 'minutes', true) > minutesIntervalBotPost - 1) {
+      await insertNewData(file, new SynthetixExplorer())
       await postTwitter(lastData, await file.readLastData())
-    } else if (moment().diff(moment(lastData[0]), 'minutes', true) > minutesIntervalBotPost - 1) {
-      await insertNewData(file, snxExp)
-      await postTwitter(lastData, await file.readLastData())
+      console.log(`${minutesIntervalBotPost} minutes until next update`)
     }
-
-    console.log(`Sleeping for ${minutesIntervalBotPost} min...`)
   } catch (error) {
     console.log(error)
   }
@@ -53,7 +48,8 @@ function timeout(ms) {
 
 async function runForever() {
   while (true) {
-    await Promise.all([getDataAndPost(), timeout(minutesIntervalBotPost * 60 * 1000)])
+    //sleeps 50 seconds between each try
+    await Promise.all([getDataAndPost(), timeout(50 * 1000)])
   }
 }
 

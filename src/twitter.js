@@ -1,7 +1,7 @@
 const Twit = require('twit')
 const moment = require('moment')
 const {twitter} = require('./config')
-const {toCurrency, percentDiff, numericDiff, oneDecimal} = require('./util')
+const {toCurrency, percentDiff, intInverseDiff, oneDecimal} = require('./util')
 
 function postTwit(twit, texto) {
   return new Promise(resolve => {
@@ -26,18 +26,20 @@ async function postTwitter(oldData, newData) {
 						SNX staked: ${oneDecimal(newData[2])}%
 						Volume last 24h: $${toCurrency(newData[3])}
 						Total Value Locked: $${toCurrency(newData[4])}
-						Fees (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[5])} sUSD
-						Rewards (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[6])} SNX`
+						Since period ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''}:
+						 - Fees: ${toCurrency(newData[5])} sUSD
+						 - Rewards: ${toCurrency(newData[6])} SNX`
   } else {
 		let hoursSinceLastTweet = oneDecimal(moment(newData[0]).diff(moment(oldData[0]), 'hours', true))
 
-    text = `Rank: ${newData[8]} ${numericDiff(oldData[1], newData[1])}
+    text = `Rank: ${newData[8]} ${intInverseDiff(oldData[8], newData[8])}
 						SNX: $${toCurrency(newData[1])} ${percentDiff(oldData[1], newData[1])}
 						SNX staked: ${oneDecimal(newData[2])}% ${percentDiff(oldData[2], newData[2])}
 						Volume last 24h: $${toCurrency(newData[3])} ${percentDiff(oldData[3], newData[3])}
 						Total Value Locked: $${toCurrency(newData[4])} ${percentDiff(oldData[4], newData[4])}
-						Fees (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[5])} sUSD ${percentDiff(oldData[5], newData[5])}
-						Rewards (started ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''} ago): ${toCurrency(newData[6])} SNX ${percentDiff(oldData[6], newData[6])}
+						Since ${daysSinceFeePeriodStarted} day${daysSinceFeePeriodStarted > 1 ? 's' : ''}:
+						 - Fees: ${toCurrency(newData[5])} sUSD ${percentDiff(oldData[5], newData[5])}
+						 - Rewards: ${toCurrency(newData[6])} SNX ${percentDiff(oldData[6], newData[6])}
 						
 						compared to ${hoursSinceLastTweet} hour${hoursSinceLastTweet > 1 ? 's' : ''} ago`
 	}

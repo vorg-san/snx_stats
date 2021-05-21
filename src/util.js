@@ -42,15 +42,15 @@ function percentDiff(oldValue, newValue) {
 	}
 }
 
-function numericDiff(oldValue, newValue) {
-	const o = parseFloat(oldValue)
-	const n = parseFloat(newValue)
+function intInverseDiff(oldValue, newValue) {
+	const o = parseInt(oldValue)
+	const n = parseInt(newValue)
 	const change = n - o
 
 	if(change === 0) {
 		return ''
 	} else {
-		if(change > 0) {
+		if(change < 0) {
 			return '🔥+' + change
 		} else {
 			return '🔻' + change
@@ -65,5 +65,6 @@ function oneDecimal(num) {
 module.exports = {
 	toCurrency: toCurrency,
 	percentDiff: percentDiff,
-	oneDecimal: oneDecimal
+	oneDecimal: oneDecimal,
+	intInverseDiff: intInverseDiff
 }
