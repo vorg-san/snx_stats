@@ -51,9 +51,9 @@ function intInverseDiff(oldValue, newValue) {
 		return ''
 	} else {
 		if(change < 0) {
-			return '🔥+' + change
+			return '🔥' + change
 		} else {
-			return '🔻' + change
+			return '🔻+' + change
 		}
 	}
 }

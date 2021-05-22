@@ -13,12 +13,20 @@ I develop software for 12 years and I am in love (and invest in) the cryptocurre
 
 ## Features
 
+![twitter bot print screen](https://github.com/vorg-san/snx_stats/blob/main/assets/bot_print.png?raw=true)
+
+https://twitter.com/SNX_Stats
+
 * Most of the stats directly from Synthetix API
 * Volume and rank from CoinMarketCap API
 * Total Value Locked from DeFi Pulse API
 * data is stored in file 'data.txt' as the bot runs  (upgraded version would change this to a database)
 * twitter post mentions % diffs from previous data with icons
 * time interval between each twitter post can be set, see configuration below
+
+## Requirements
+
+Node version 14 or superior
 
 ## Install
 
